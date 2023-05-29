@@ -1,4 +1,4 @@
-package com.urbtech.api.dto.request;
+package com.urbtech.api.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

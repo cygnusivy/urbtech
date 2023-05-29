@@ -1,7 +1,7 @@
 package com.urbtech.api.controller;
 
-import com.urbtech.api.dto.LoginDto;
-import com.urbtech.api.dto.request.LoginRequest;
+import com.urbtech.api.dto.response.LoginDtoResponse;
+import com.urbtech.api.dto.request.LoginDtoRequest;
 import com.urbtech.api.mapper.LoginMapper;
 import com.urbtech.domain.model.LoginModel;
 import com.urbtech.domain.model.UserModel;
@@ -28,15 +28,15 @@ public class LoginController {
 
     @PostMapping("/loginUsuario")
     @ResponseStatus(HttpStatus.CREATED)
-    public LoginDto logar(@Valid @RequestBody LoginRequest loginRequest){
+    public LoginDtoResponse logar(@Valid @RequestBody LoginDtoRequest loginDtoRequest){
 
-        LoginModel loginModel = loginService.logar(loginRequest.getEmail(), loginRequest.getSenha());
-        LoginDto loginDto = loginMapper.loginModelToDto(loginModel);
+        LoginModel loginModel = loginService.logar(loginDtoRequest.getEmail(), loginDtoRequest.getSenha());
+        LoginDtoResponse loginDtoResponse = loginMapper.loginModelToDto(loginModel);
 
         Optional<UserModel> userRegistrationModel = userRepository.findByEmail(loginModel.getEmail());
-        loginDto.setIdUser(userRegistrationModel.get().getId());
+        loginDtoResponse.setIdUser(userRegistrationModel.get().getId());
 
-        return loginDto;
+        return loginDtoResponse;
 
     }
 

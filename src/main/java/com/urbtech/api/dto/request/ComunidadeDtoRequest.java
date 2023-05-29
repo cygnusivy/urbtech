@@ -1,13 +1,11 @@
-package com.urbtech.api.dto;
+package com.urbtech.api.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ComunidadeDto {
-
-    private Long id;
+public class ComunidadeDtoRequest {
 
     private String nomeComunidade;
 

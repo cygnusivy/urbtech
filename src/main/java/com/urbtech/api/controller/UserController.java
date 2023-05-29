@@ -1,8 +1,8 @@
 package com.urbtech.api.controller;
 
-import com.urbtech.api.dto.UserDto;
-import com.urbtech.api.dto.request.ImgPerfil;
-import com.urbtech.api.dto.request.UserRequest;
+import com.urbtech.api.dto.request.UserDtoRequest;
+import com.urbtech.api.dto.response.ImgPerfil;
+import com.urbtech.api.dto.response.UserDtoResponse;
 import com.urbtech.api.mapper.UserMapper;
 import com.urbtech.domain.model.UserModel;
 import com.urbtech.domain.model.UsuarioComunidadeModel;
@@ -32,10 +32,10 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserModel cadastrar(@Valid @RequestBody UserDto userDto){
+    public UserModel cadastrar(@Valid @RequestBody UserDtoRequest userDtoRequest){
 
         //LOGGER.info("Início do método para cadastro de usuário.");
-        return userService.salvar(userDto);
+        return userService.salvar(userDtoRequest);
     }
 
     @PostMapping("entrarComunidade")
@@ -46,10 +46,10 @@ public class UserController {
     }
 
     @GetMapping("retornoUsuario/{id}")
-    public UserRequest getUsuario(@PathVariable Long id){
+    public UserDtoResponse getUsuario(@PathVariable Long id){
         Optional<UserModel> user = Optional.ofNullable(this.userService.buscaUsuarioPeloId(id));
-        UserRequest userRequest = userMapper.userModelToRequest(Optional.of(user.get()));
-        return userRequest;
+        UserDtoResponse userDtoResponse = userMapper.userModelToRequest(Optional.of(user.get()));
+        return userDtoResponse;
     }
 
     @GetMapping("retornaUrlFotoPerfil/{id}")
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @PutMapping("atualizarUsuario/{id}")
-    public UserRequest atualizar(@Valid @PathVariable Long id, @RequestBody UserRequest user){
+    public UserDtoResponse atualizar(@Valid @PathVariable Long id, @RequestBody UserDtoResponse user){
 
         Optional<UserModel> userModel = Optional.ofNullable(this.userService.buscaUsuarioPeloId(id));
 

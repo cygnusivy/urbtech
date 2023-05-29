@@ -1,10 +1,9 @@
 package com.urbtech.domain.service;
 
-import com.urbtech.api.dto.ComunidadeDto;
-import com.urbtech.api.dto.request.PostRequest;
+import com.urbtech.api.dto.request.ComunidadeDtoRequest;
+import com.urbtech.api.dto.response.PostDtoResponse;
 import com.urbtech.domain.exception.BusinessException;
 import com.urbtech.domain.model.ComunidadeModel;
-import com.urbtech.domain.model.PostModel;
 import com.urbtech.domain.model.UsuarioComunidadeModel;
 import com.urbtech.domain.repository.ComunidadeRepository;
 import com.urbtech.domain.repository.UsuarioComunidadeRepository;
@@ -29,21 +28,21 @@ public class ComunidadeService {
     private UsuarioComunidadeRepository usuarioComunidadeRepository;
 
     @Transactional
-    public ComunidadeModel salvar(ComunidadeDto comunidadeDto){
-        if (this.comunidadeRepository.existsByNomeComunidade(comunidadeDto.getNomeComunidade())){
+    public ComunidadeModel salvar(ComunidadeDtoRequest comunidadeDtoRequest){
+        if (this.comunidadeRepository.existsByNomeComunidade(comunidadeDtoRequest.getNomeComunidade())){
             throw new BusinessException("Já exixte uma comunidade com mesmo nome.");
         }
         ComunidadeModel comunidadeModel = new ComunidadeModel();
-        comunidadeModel.setNomeComunidade(comunidadeDto.getNomeComunidade());
+        comunidadeModel.setNomeComunidade(comunidadeDtoRequest.getNomeComunidade());
         comunidadeModel.setDataCriacaoComunidade(LocalDateTime.now());
 
         return this.comunidadeRepository.save(comunidadeModel);
     }
 
-    public List<PostRequest> postRequestList(Long idComunidade){
+    public List<PostDtoResponse> postRequestList(Long idComunidade){
         this.userService.validaExistenciaDaComunidade(idComunidade);
 
-        List<PostRequest> postRequestList = new ArrayList<>();
+        List<PostDtoResponse> postDtoResponseList = new ArrayList<>();
 
         List<Long> idUsuariosList = new ArrayList<>();
 
@@ -55,13 +54,13 @@ public class ComunidadeService {
         }
 
         for (Long idUsuario : idUsuariosList){
-            List<PostRequest> list = this.postService.postRequestListPeloIdUsuario(idUsuario);
-            for (PostRequest postRequest : list){
-                postRequestList.add(postRequest);
+            List<PostDtoResponse> list = this.postService.postRequestListPeloIdUsuario(idUsuario);
+            for (PostDtoResponse postDtoResponse : list){
+                postDtoResponseList.add(postDtoResponse);
             }
         }
 
-        return postRequestList;
+        return postDtoResponseList;
 
     }
 }

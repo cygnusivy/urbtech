@@ -1,7 +1,7 @@
 package com.urbtech.api.controller;
 
-import com.urbtech.api.dto.ComentarioDto;
-import com.urbtech.api.dto.request.ComentarioRequest;
+import com.urbtech.api.dto.request.ComentarioDtoRequest;
+import com.urbtech.api.dto.response.ComentarioResponse;
 import com.urbtech.domain.service.ComentarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,8 @@ public class ComentarioController {
 
     @PostMapping("comentar")
     @ResponseStatus(HttpStatus.CREATED)
-    public ComentarioRequest comentar(@Valid @RequestBody ComentarioDto comentarioDto){
-        return this.comentarioService.comentar(comentarioDto);
+    public ComentarioResponse comentar(@Valid @RequestBody ComentarioDtoRequest comentarioDtoRequest){
+        return this.comentarioService.comentar(comentarioDtoRequest);
     }
 
 }

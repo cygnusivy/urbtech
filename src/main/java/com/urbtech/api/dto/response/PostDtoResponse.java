@@ -1,4 +1,4 @@
-package com.urbtech.api.dto.request;
+package com.urbtech.api.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PostRequest{
+public class PostDtoResponse {
 
     private Long id;
 
@@ -21,6 +21,6 @@ public class PostRequest{
 
     private Long qtdCurtidas;
 
-    private List<ComentarioRequest> listaComentario;
+    private List<ComentarioResponse> listaComentario;
 
 }

@@ -1,7 +1,7 @@
 package com.urbtech.domain.service;
 
-import com.urbtech.api.dto.ComentarioDto;
-import com.urbtech.api.dto.request.ComentarioRequest;
+import com.urbtech.api.dto.request.ComentarioDtoRequest;
+import com.urbtech.api.dto.response.ComentarioResponse;
 import com.urbtech.api.mapper.ComentarioMapper;
 import com.urbtech.domain.model.ComentarioModel;
 import com.urbtech.domain.model.UserModel;
@@ -25,40 +25,40 @@ public class ComentarioService {
     private ComentarioMapper comentarioMapper;
 
     @Transactional
-    public ComentarioRequest comentar(ComentarioDto comentarioDto){
-        this.userService.validaContaComIdUsuario(comentarioDto.getIdUsuarioComentario());
+    public ComentarioResponse comentar(ComentarioDtoRequest comentarioDtoRequest){
+        this.userService.validaContaComIdUsuario(comentarioDtoRequest.getIdUsuarioComentario());
 
-        UserModel userModelComentario = this.userService.buscaUsuarioPeloId(comentarioDto.getIdUsuarioComentario());
+        UserModel userModelComentario = this.userService.buscaUsuarioPeloId(comentarioDtoRequest.getIdUsuarioComentario());
 
-        ComentarioModel comentarioModel = comentarioMapper.dtoToModel(comentarioDto);
+        ComentarioModel comentarioModel = comentarioMapper.dtoToModel(comentarioDtoRequest);
         comentarioModel.setHorarioPublicacao(LocalDateTime.now());
 
         this.comentarioRepository.save(comentarioModel);
 
-        ComentarioRequest comentarioRequest = comentarioMapper.modelToRequest(comentarioModel);
-        comentarioRequest.setNomeUsuarioComentario(userModelComentario.getNome());
-        comentarioRequest.setImgUrlUsuarioComentario(userModelComentario.getImgUrl());
+        ComentarioResponse comentarioResponse = comentarioMapper.modelToRequest(comentarioModel);
+        comentarioResponse.setNomeUsuarioComentario(userModelComentario.getNome());
+        comentarioResponse.setImgUrlUsuarioComentario(userModelComentario.getImgUrl());
 
-        return comentarioRequest;
+        return comentarioResponse;
     }
 
-    public List<ComentarioRequest> comentarioRequestList(Long idPost){
+    public List<ComentarioResponse> comentarioResponseList(Long idPost){
 
         List<ComentarioModel> comentarioModelList = this.comentarioRepository.findAllByIdPost(idPost);
-        List<ComentarioRequest> comentarioRequestList = new ArrayList<>();
+        List<ComentarioResponse> comentarioResponseList = new ArrayList<>();
 
         for (ComentarioModel comentarioModel : comentarioModelList){
 
-            ComentarioRequest comentarioRequest = this.comentarioMapper.modelToRequest(comentarioModel);
-            UserModel userComentario = this.userService.buscaUsuarioPeloId(comentarioRequest.getIdUsuarioComentario());
+            ComentarioResponse comentarioResponse = this.comentarioMapper.modelToRequest(comentarioModel);
+            UserModel userComentario = this.userService.buscaUsuarioPeloId(comentarioResponse.getIdUsuarioComentario());
 
-            comentarioRequest.setImgUrlUsuarioComentario(userComentario.getImgUrl());
-            comentarioRequest.setNomeUsuarioComentario(userComentario.getNome());
+            comentarioResponse.setImgUrlUsuarioComentario(userComentario.getImgUrl());
+            comentarioResponse.setNomeUsuarioComentario(userComentario.getNome());
 
-            comentarioRequestList.add(comentarioRequest);
+            comentarioResponseList.add(comentarioResponse);
         }
 
-        return comentarioRequestList;
+        return comentarioResponseList;
     }
 
 }

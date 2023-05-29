@@ -27,6 +27,10 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(max = 20)
+    private String nomeUsuario;
+
     @Size(max = 250)
     private String imgUrl;
 

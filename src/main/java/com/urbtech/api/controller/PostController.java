@@ -1,7 +1,7 @@
 package com.urbtech.api.controller;
 
-import com.urbtech.api.dto.PostDto;
-import com.urbtech.api.dto.request.PostRequest;
+import com.urbtech.api.dto.request.PostDtoRequest;
+import com.urbtech.api.dto.response.PostDtoResponse;
 import com.urbtech.domain.model.CurtidaModel;
 import com.urbtech.domain.service.PostService;
 import lombok.AllArgsConstructor;
@@ -22,8 +22,8 @@ public class PostController {
 
     @PostMapping("postar")
     @ResponseStatus(HttpStatus.CREATED)
-    public PostDto salvar(@Valid @RequestBody PostDto postDto){
-        return this.postService.postar(postDto);
+    public PostDtoRequest salvar(@Valid @RequestBody PostDtoRequest postDtoRequest){
+        return this.postService.postar(postDtoRequest);
     }
 
     @PostMapping("curtir")
@@ -34,12 +34,12 @@ public class PostController {
     }
 
     @GetMapping("selecionarPost/{id}")
-    public PostRequest selecionar(@PathVariable Long id){
+    public PostDtoResponse selecionar(@PathVariable Long id){
         return this.postService.selecionarPost(id);
     }
 
     @GetMapping("selecionaListaPost/{id}")
-    public List<PostRequest> listarPosts(@Valid @PathVariable Long id){
+    public List<PostDtoResponse> listarPosts(@Valid @PathVariable Long id){
         return this.postService.postRequestListPeloIdUsuario(id);
     }
 

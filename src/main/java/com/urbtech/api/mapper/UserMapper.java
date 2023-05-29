@@ -1,6 +1,6 @@
 package com.urbtech.api.mapper;
 
-import com.urbtech.api.dto.request.UserRequest;
+import com.urbtech.api.dto.response.UserDtoResponse;
 import com.urbtech.domain.model.UserModel;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,12 +14,12 @@ public class UserMapper {
 
     private ModelMapper modelMapper;
 
-    public UserRequest userModelToRequest(Optional<UserModel> userModel){
-        return modelMapper.map(userModel.get(), UserRequest.class);
+    public UserDtoResponse userModelToRequest(Optional<UserModel> userModel){
+        return modelMapper.map(userModel.get(), UserDtoResponse.class);
     }
 
-    public UserModel userRequestToModel(UserRequest userRequest){
-        return modelMapper.map(userRequest, UserModel.class);
+    public UserModel userRequestToModel(UserDtoResponse userDtoResponse){
+        return modelMapper.map(userDtoResponse, UserModel.class);
     }
 
 }

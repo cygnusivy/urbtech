@@ -1,15 +1,11 @@
-package com.urbtech.api.dto;
+package com.urbtech.api.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
-public class ComentarioDto {
-
-    private Long id;
+public class ComentarioDtoRequest {
 
     private Long idPost;
 

@@ -1,7 +1,7 @@
 package com.urbtech.domain.service;
 
-import com.urbtech.api.dto.PostDto;
-import com.urbtech.api.dto.request.PostRequest;
+import com.urbtech.api.dto.request.PostDtoRequest;
+import com.urbtech.api.dto.response.PostDtoResponse;
 import com.urbtech.api.mapper.PostMapper;
 import com.urbtech.domain.exception.BusinessException;
 import com.urbtech.domain.model.CurtidaModel;
@@ -32,17 +32,17 @@ public class PostService {
     private PostMapper postMapper;
 
     @Transactional
-    public PostDto postar(PostDto postDto){
-        PostModel postModel = postMapper.dtoToEntity(postDto);
+    public PostDtoRequest postar(PostDtoRequest postDtoRequest){
+        PostModel postModel = postMapper.dtoToEntity(postDtoRequest);
 
-        if (this.userService.validaContaComIdUsuario(postDto.getIdUsuario()) == null){
+        if (this.userService.validaContaComIdUsuario(postDtoRequest.getIdUsuario()) == null){
             throw new BusinessException("Usuário não cadastrado.");
         }
 
         postModel.setQtdCurtidas(0L);
         this.postRepository.save(postModel);
 
-        return postDto;
+        return postDtoRequest;
     }
 
     @Transactional
@@ -61,19 +61,19 @@ public class PostService {
         this.curtidaRepository.save(curtidaModel);
     }
 
-    public PostRequest selecionarPost(Long id){
+    public PostDtoResponse selecionarPost(Long id){
         this.verificaExistenciaDoPostPeloId(id);
         Optional<PostModel> postModel = this.postRepository.findById(id);
 
         this.userService.validaContaComIdUsuario(postModel.get().getIdUsuario());
         UserModel userModel = this.userService.buscaUsuarioPeloId(postModel.get().getId());
 
-        PostRequest postRequest = this.postMapper.entityToRequest(postModel.get());
-        postRequest.setNomeUsuario(userModel.getNome());
-        postRequest.setImgUrlUsuario(userModel.getImgUrl());
-        postRequest.setListaComentario(this.comentarioService.comentarioRequestList(id));
+        PostDtoResponse postDtoResponse = this.postMapper.entityToRequest(postModel.get());
+        postDtoResponse.setNomeUsuario(userModel.getNome());
+        postDtoResponse.setImgUrlUsuario(userModel.getImgUrl());
+        postDtoResponse.setListaComentario(this.comentarioService.comentarioResponseList(id));
 
-        return postRequest;
+        return postDtoResponse;
     }
 
     public PostModel selecionaPost(Long id){
@@ -82,25 +82,25 @@ public class PostService {
         return postEntity.get();
     }
 
-    public List<PostRequest> postRequestListPeloIdUsuario(Long idUsuario){
+    public List<PostDtoResponse> postRequestListPeloIdUsuario(Long idUsuario){
 
         UserModel userModel = this.userService.buscaUsuarioPeloId(idUsuario);
 
         List<PostModel> postModelList = this.postRepository.findAllByIdUsuario(idUsuario);
-        List<PostRequest> postRequestList = new ArrayList<>();
+        List<PostDtoResponse> postDtoResponseList = new ArrayList<>();
 
         for (PostModel postModel : postModelList){
 
-            PostRequest postRequest = this.postMapper.entityToRequest(postModel);
-            postRequest.setNomeUsuario(userModel.getNome());
-            postRequest.setImgUrlUsuario(userModel.getImgUrl());
-            postRequest.setListaComentario(this.comentarioService.comentarioRequestList(postModel.getId()));
+            PostDtoResponse postDtoResponse = this.postMapper.entityToRequest(postModel);
+            postDtoResponse.setNomeUsuario(userModel.getNome());
+            postDtoResponse.setImgUrlUsuario(userModel.getImgUrl());
+            postDtoResponse.setListaComentario(this.comentarioService.comentarioResponseList(postModel.getId()));
 
-            postRequestList.add(postRequest);
+            postDtoResponseList.add(postDtoResponse);
 
         }
 
-        return postRequestList;
+        return postDtoResponseList;
     }
 
     public void deletarPost(Long id){

@@ -1,7 +1,7 @@
 package com.urbtech.api.mapper;
 
-import com.urbtech.api.dto.ComentarioDto;
-import com.urbtech.api.dto.request.ComentarioRequest;
+import com.urbtech.api.dto.request.ComentarioDtoRequest;
+import com.urbtech.api.dto.response.ComentarioResponse;
 import com.urbtech.domain.model.ComentarioModel;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,12 +13,12 @@ public class ComentarioMapper {
 
     private ModelMapper modelMapper;
 
-    public ComentarioModel dtoToModel(ComentarioDto comentarioDto){
-        return this.modelMapper.map(comentarioDto, ComentarioModel.class);
+    public ComentarioModel dtoToModel(ComentarioDtoRequest comentarioDtoRequest){
+        return this.modelMapper.map(comentarioDtoRequest, ComentarioModel.class);
     }
 
-    public ComentarioRequest modelToRequest(ComentarioModel comentarioModel){
-        return this.modelMapper.map(comentarioModel, ComentarioRequest.class);
+    public ComentarioResponse modelToRequest(ComentarioModel comentarioModel){
+        return this.modelMapper.map(comentarioModel, ComentarioResponse.class);
     }
 
 }

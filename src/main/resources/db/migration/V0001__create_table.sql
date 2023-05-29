@@ -1,5 +1,6 @@
 create table usuario (
   id bigint not null auto_increment,
+  nome_usuario varchar(20) not null,
   img_url varchar(250),
   nome varchar(60) not null,
   email varchar(255) unique not null ,
@@ -67,4 +68,33 @@ create table usuario_comunidade (
     id_comunidade bigint not null,
 
     primary key (id)
+);
+
+create table tags(
+    id bigint not null auto_increment,
+    id_postagem bigint not null,
+    tag varchar(250) not null,
+
+    primary key(id)
+);
+
+create table endereco(
+    id bigint not null auto_increment,
+    cep varchar(9) not null,
+    numero bigint not null,
+    rua varchar(100) not null,
+    bairro varchar(100) not null,
+    cidade varchar(100) not null,
+    estado varchar(100) not null,
+    id_usuario bigint not null,
+
+    primary key(id)
+);
+
+create table telefone(
+    id bigint not null auto_increment,
+    telefone varchar(20) not null,
+    id_usuario bigint not null,
+
+    primary key(id)
 );

@@ -1,6 +1,6 @@
 package com.urbtech.domain.service;
 
-import com.urbtech.api.dto.UserDto;
+import com.urbtech.api.dto.request.UserDtoRequest;
 import com.urbtech.domain.exception.BusinessException;
 import com.urbtech.domain.model.ComunidadeModel;
 import com.urbtech.domain.model.UserModel;
@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -28,12 +29,12 @@ public class UserService {
     private ComunidadeRepository comunidadeRepository;
 
     @Transactional
-    public UserModel salvar(UserDto userDto){
+    public UserModel salvar(UserDtoRequest userDtoRequest){
 
         //LOGGUER.info("Verificando existência de usuário cadastrado para o email informado.");
-        boolean emailEmUso = userRepository.findByEmail(userDto.getEmail())
+        boolean emailEmUso = userRepository.findByEmail(userDtoRequest.getEmail())
                 .stream()
-                .anyMatch(c -> !c.equals(userDto));
+                .anyMatch(c -> !c.equals(userDtoRequest));
 
         if (emailEmUso){
             //LOGGUER.info("Não foi possível realizar o cadastro pois já existe um usuário cadastrado com o email informado.");
@@ -42,20 +43,20 @@ public class UserService {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        validaSenha(userDto.getSenha(), userDto.getSenha2());
+        validaSenha(userDtoRequest.getSenha(), userDtoRequest.getSenha2());
 
-        String senhaCriptografada1 = encoder.encode(userDto.getSenha());
+        String senhaCriptografada1 = encoder.encode(userDtoRequest.getSenha());
 
         UserModel userModel = new UserModel();
-        userModel.setNome(userDto.getNome());
-        userModel.setEmail(userDto.getEmail());
+        userModel.setNome(userDtoRequest.getNome());
+        userModel.setEmail(userDtoRequest.getEmail());
 
         userModel.setSenha(senhaCriptografada1);
         userModel.setDataAberturaConta(LocalDate.now());
+        userModel.setNomeUsuario(criaNomeUsuario(userModel.getNome(), 1L));
         userModel.setImgUrl("https://res.cloudinary.com/dfgyr0fi7/image/upload/v1684527579/pjwp0vnnz4yecnoplab3.webp");
 
         this.userRepository.save(userModel);
-
 
         Optional<ComunidadeModel> comunidadeModel = this.comunidadeRepository.findById(1L);
         UsuarioComunidadeModel usuarioComunidadeModel = new UsuarioComunidadeModel();
@@ -112,6 +113,21 @@ public class UserService {
         if (!this.comunidadeRepository.existsById(id)){
             throw new BusinessException("Comunidade não existe.");
         }
+    }
+    private String criaNomeUsuario(String nome, Long id){
+        String[] vetorNome = nome.split( " ");
+        String nomeUsuarioRetorno;
+
+        if (vetorNome.length == 1 || (vetorNome.length > 1 && vetorNome.length < 3)){
+            nomeUsuarioRetorno = vetorNome[0] + id;
+        }else if (vetorNome.length > 2){
+            nomeUsuarioRetorno = vetorNome[0] + "_" + vetorNome[2] + id;
+        }else {
+            nomeUsuarioRetorno = vetorNome[0] + "_" + vetorNome[0] + id;
+        }
+
+        return nomeUsuarioRetorno;
+
     }
 
     private void validaSenha(String password, String passwordAgain){

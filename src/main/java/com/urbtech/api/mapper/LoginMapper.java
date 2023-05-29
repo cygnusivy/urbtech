@@ -1,6 +1,6 @@
 package com.urbtech.api.mapper;
 
-import com.urbtech.api.dto.LoginDto;
+import com.urbtech.api.dto.response.LoginDtoResponse;
 import com.urbtech.domain.model.LoginModel;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -12,8 +12,8 @@ public class LoginMapper {
 
     private ModelMapper modelMapper;
 
-    public LoginDto loginModelToDto(LoginModel loginModel){
-        return modelMapper.map(loginModel, LoginDto.class);
+    public LoginDtoResponse loginModelToDto(LoginModel loginModel){
+        return modelMapper.map(loginModel, LoginDtoResponse.class);
     }
 
 }
