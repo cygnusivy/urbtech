@@ -32,14 +32,14 @@ public class UserService {
     public UserModel salvar(UserDtoRequest userDtoRequest){
 
         //LOGGUER.info("Verificando existência de usuário cadastrado para o email informado.");
-        boolean emailEmUso = userRepository.findByEmail(userDtoRequest.getEmail())
-                .stream()
-                .anyMatch(c -> !c.equals(userDtoRequest));
+//        boolean emailEmUso = userRepository.findByEmail(userDtoRequest.getEmail())
+//                .stream()
+//                .anyMatch(c -> !c.equals(userDtoRequest));
 
-        if (emailEmUso){
-            //LOGGUER.info("Não foi possível realizar o cadastro pois já existe um usuário cadastrado com o email informado.");
-            throw new BusinessException("Já existe um usuário cadastrado com este e-mail.");
-        }
+//        if (emailEmUso){
+//            //LOGGUER.info("Não foi possível realizar o cadastro pois já existe um usuário cadastrado com o email informado.");
+//            throw new BusinessException("Já existe um usuário cadastrado com este e-mail.");
+//        }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
