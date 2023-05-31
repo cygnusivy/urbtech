@@ -24,7 +24,7 @@ Isenha2.addEventListener("input", validarSenha);
 
 function cadastrar() {
 
-    fetch(`https://e84c-45-234-11-160.ngrok-free.app/usuario`,
+    fetch(`https://urgtech-apis.herokuapp.com/usuario`,
     {
         headers: {
             "Accept": "application/json",
