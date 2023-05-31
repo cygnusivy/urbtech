@@ -49,7 +49,7 @@ const dataFormatada = `${ano}-${mes}-${dia}`;
 const imagemExibida = document.querySelector('#imagem-padrao');
 const userId = localStorage.getItem('userId');
 
-fetch(`http://localhost:8080/usuario/retornoUsuario/${userId}`)
+fetch(`https://e84c-45-234-11-160.ngrok-free.app/usuario/retornoUsuario/${userId}`)
     .then(function (res){
         if (res.status === 200){
             return res.json();
@@ -75,7 +75,7 @@ fetch(`http://localhost:8080/usuario/retornoUsuario/${userId}`)
 
     function aatualizarConta(){
 
-        fetch(`https://261a-179-124-140-113.ngrok-free.app/usuario/atualizarUsuario/${userId}`,
+        fetch(`https://e84c-45-234-11-160.ngrok-free.app/usuario/atualizarUsuario/${userId}`,
         {
             headers: {
                 "Accept": "application/json",

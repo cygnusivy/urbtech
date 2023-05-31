@@ -8,7 +8,7 @@ botao.disabled = true;
 
 function logar() {
 
-    fetch(`http://localhost:8080/login/loginUsuario`,
+    fetch(`https://e84c-45-234-11-160.ngrok-free.app/login/loginUsuario`,
     {
         headers: {
             "Accept": "application/json",

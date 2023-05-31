@@ -24,7 +24,7 @@ Isenha2.addEventListener("input", validarSenha);
 
 function cadastrar() {
 
-    fetch(`http://localhost:8080/usuario`,
+    fetch(`https://e84c-45-234-11-160.ngrok-free.app/usuario`,
     {
         headers: {
             "Accept": "application/json",

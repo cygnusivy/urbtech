@@ -38,7 +38,7 @@ btn_postar_foto.addEventListener('click', () =>{
 
 
 function postar(){
-    fetch(`http://localhost:8080/post/postar`,
+    fetch(`https://e84c-45-234-11-160.ngrok-free.app/post/postar`,
     {
             headers: {
                 "Accept": "application/json",
