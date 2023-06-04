@@ -38,7 +38,7 @@ btn_postar_foto.addEventListener('click', () =>{
 
 
 function postar(){
-    fetch(`https://urgtech-apis.herokuapp.com/post/postar`,
+    fetch(`https://urbtech-app.herokuapp.com/post/postar`,
     {
             headers: {
                 "Accept": "application/json",

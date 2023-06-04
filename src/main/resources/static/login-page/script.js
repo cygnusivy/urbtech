@@ -8,7 +8,7 @@ botao.disabled = true;
 
 function logar() {
 
-    fetch(`https://urgtech-apis.herokuapp.com/login/loginUsuario`,
+    fetch(`https://urbtech-app.herokuapp.com/login/loginUsuario`,
     {
         headers: {
             "Accept": "application/json",

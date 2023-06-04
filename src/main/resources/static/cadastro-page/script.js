@@ -24,7 +24,7 @@ Isenha2.addEventListener("input", validarSenha);
 
 function cadastrar() {
 
-    fetch(`https://urgtech-apis.herokuapp.com/usuario`,
+    fetch(`https://urbtech-app.herokuapp.com/usuario`,
     {
         headers: {
             "Accept": "application/json",

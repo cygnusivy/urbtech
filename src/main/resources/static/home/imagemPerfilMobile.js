@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const foto_perfil_home = document.querySelector('.btmobilemo');
   const userId = localStorage.getItem('userId');
 
-  fetch(`https://urgtech-apis.herokuapp.com/usuario/retornaUrlFotoPerfil/${userId}`)
+  fetch(`https://urbtech-app.herokuapp.com/usuario/retornaUrlFotoPerfil/${userId}`)
     .then(function (res){
         if (res.status === 200){
             return res.json();

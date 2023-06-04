@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Função para buscar as publicações da API
 function buscarPublicacoes() {
   // Fazer a chamada para a API
-  fetch(`https://urgtech-apis.herokuapp.com/comunidade/selecionaPostagensDaComunidade/1`)
+  fetch(`https://urbtech-app.herokuapp.com/comunidade/selecionaPostagensDaComunidade/1`)
     .then(function (res){
       if (res.status === 200){
         return res.json();
